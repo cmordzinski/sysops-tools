@@ -1,0 +1,4 @@
+---
+enable_admscripts_role: true
+
+adm_profile_script: "/etc/profile.d/admscripts.sh"

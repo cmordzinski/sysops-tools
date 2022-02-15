@@ -1,0 +1,10 @@
+enable_common_role: true
+
+common_update_motd: true
+
+install_common_packages: true
+
+common_packages:
+  - vim
+  - git
+  - python3

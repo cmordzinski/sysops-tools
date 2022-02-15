@@ -1,0 +1,66 @@
+---
+
+- name: Create ansible cache directory
+  file:
+    path: "{{ ansible_cache_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Create ansible log directory
+  file:
+    path: "{{ ansible_log_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Create /opt/hq/ directory
+  file:
+    path: "{{ hq_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Create additional hq directories
+  file:
+    path: "{{ hq_dir }}/{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  with_items: "{{ hq_additional_dirs }}"
+
+- name: Copy root .bashrc
+  copy:
+    src: "root/_bashrc"
+    dest: /root/.bashrc
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy /etc/vimrc
+  copy:
+    src: "etc/vimrc"
+    dest: /etc/vimrc
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Create /etc/motd from template
+  template:
+    src: etc/motd.j2
+    dest: /etc/motd
+    owner: root
+    group: root
+    mode: 0644
+  when: common_update_motd
+
+- name: Install common packages
+  apt:
+    pkg:
+      "{{ common_packages }}"
+    state: latest
+  when: install_common_packages

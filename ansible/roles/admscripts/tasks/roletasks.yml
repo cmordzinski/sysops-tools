@@ -1,0 +1,28 @@
+---
+
+- name: Sync admin scripts
+  synchronize:
+    src: adm/
+    dest: "{{ adm_script_dir }}"
+    copy_links: yes
+    delete: yes
+    owner: no
+    group: no
+    checksum: yes
+    times: no
+
+- name: Add admin scripts bin dir to system-wide $PATH
+  copy:
+    dest: "{{ adm_profile_script }}"
+    content: "PATH=$PATH:{{ adm_script_dir }}/bin"
+    mode: 0644
+  #Prevent path from growing on every run
+  when: ansible_env.PATH is not search(adm_script_dir)
+
+- name: Add admin scripts bin dir to secure_path 
+  template:
+    src: etc/sudoers.d/secure_path.j2
+    dest: /etc/sudoers.d/secure_path
+    owner: root
+    group: root
+    mode: 0440

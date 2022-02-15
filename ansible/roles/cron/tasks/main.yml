@@ -1,0 +1,2 @@
+- include_tasks: roletasks.yml
+  when: enable_cron_role

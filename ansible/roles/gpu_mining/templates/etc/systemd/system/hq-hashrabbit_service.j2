@@ -1,0 +1,15 @@
+# hq-hashrabbit.service, ethereum mining service
+[Unit]
+Description=Ethereum Mining Service
+After=network.target
+AssertPathExists=/opt/t-rex-miner
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=30
+ExecStart=/opt/t-rex-miner/t-rex -a ethash -o {{ pool_url }} -u {{ wallet_address }} -p x -w {{ ansible_hostname }}
+StandardOutput=file:/opt/hq/logs/hq-hashrabbit.log
+
+[Install]
+WantedBy=multi-user.target

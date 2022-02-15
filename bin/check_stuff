@@ -1,0 +1,43 @@
+#!/bin/bash
+
+cat /etc/motd
+
+RED='\033[0;31m'
+NC='\033[0m'
+GREEN='\033[0;32m'
+
+ONLOADVERSION=`rpm -q openonload`
+echo "          Onload Version: $ONLOADVERSION"
+
+BIOSVERSION=`dmidecode -s bios-version`
+BIOSVENDOR=`dmidecode -s bios-vendor`
+BIOSDATE=`dmidecode -s bios-release-date`
+echo "          BIOS Version: $BIOSVENDOR $BIOSVERSION released on $BIOSDATE"
+
+
+HYPERTHREAD=`lscpu | grep ^Thread`
+HTHREAD=`echo $HYPERTHREAD | awk '{print $4}'`
+
+echo
+if [ $HTHREAD == 2 ] ; then
+   echo -e "          Hyperthreading : ${RED}enabled!!${NC}"
+   #echo "          $HYPERTHREAD"
+else
+   echo -e "          Hyperthreading : ${GREEN}disabled${NC}"
+   #echo "          $HYPERTHREAD"
+fi
+
+ISOLCPUS=`cat /proc/cmdline | grep isolcpus`
+if [ $? == 0 ] ; then
+   ISOLATED=`cat /sys/devices/system/cpu/isolated`
+   echo -e "          CPU Isolation  : ${GREEN}enabled on CPUs $ISOLATED${NC}"
+else
+   echo -e "          CPU Isolation  : ${RED}NOT enabled${NC}"
+fi
+
+echo -e "          Routes:"
+ip route show | sed 's/^/          /'
+
+echo
+echo -e "          /proc/cmdline:"
+cat /proc/cmdline | sed 's/^/          /'

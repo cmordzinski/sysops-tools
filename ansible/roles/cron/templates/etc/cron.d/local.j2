@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=""
+
+{% for var in cron_vars %}
+{{ var.name }}={{ var.value }}
+{% endfor %}
+
+{% if cron_enable_test %}
+1 16 * * * root {{ adm_script_dir }}/sbin/test
+{% endif %}
+
+{% for entry in cron_entries %}
+{{ entry.minute }} {{ entry.hour }} {{ entry.day|default("*", true) }} {{ entry.month|default("*", true) }} {{ entry.weekday|default("*", true) }} {{ entry.user|default("root", true) }} {{ entry.job }}
+{% endfor %}

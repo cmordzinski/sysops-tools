@@ -1,0 +1,21 @@
+---
+
+gather_facts: true
+gather_subset: [ 'all' ]
+
+ansible_python_interpreter: auto
+
+ansible_cache_dir: ~/.ansible/cache
+ansible_log_dir: /var/log/ansible
+
+adm_script_dir: /opt/adm
+
+hq_dir: /opt/hq
+hq_additional_dirs:
+  - logs
+
+site_role_list:
+  - common
+  - admscripts
+  - cron
+  - gpu_mining

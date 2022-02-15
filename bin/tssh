@@ -1,0 +1,36 @@
+#!/bin/bash
+# A script to ssh into multiple servers at the same time and multiplex the keyboard.
+
+starttmux() {
+    # Generate a large random number and assign it to our new window.
+    WINDOWID=$[(RANDOM%99999999)+500]
+    # First host generates the new window
+    local hosts=(${HOSTS})
+    tmux new-window -t ${WINDOWID} "ssh ${hosts[0]}"
+    # Remove the first host from our list, then loop through the remaining list of hosts spawning new panes and tiling them
+    unset hosts[0];
+    for i in "${hosts[@]}"; do
+        tmux split-window -t ${WINDOWID} -h "ssh ${i}"
+        tmux select-layout -t ${WINDOWID} tiled > /dev/null
+    done
+    # Enable keyboard synchronization for all panes.
+    tmux set-window-option -t ${WINDOWID} synchronize-panes on > /dev/null
+}
+
+# Copy the list of hosts into the HOSTS variable
+HOSTS=${HOSTS:=$*}
+if [ -z "${HOSTS}" ]; then
+    echo
+    echo 'multi pane SSH session automation for tmux'
+    echo 'Usage:'
+    echo  ' mssh [/path/to/hosts.txt]'
+    echo  ' mssh [user@host1 user@host2 ... user@host5]'
+    echo
+    exit 1
+fi
+
+# If the host list is presented as a file, strip the newlines and use this list instead
+if [ -f $1 ]; then
+    HOSTS=$(sed -e ':a;N;$!ba;s/\n/ /g' ${1})
+fi
+starttmux

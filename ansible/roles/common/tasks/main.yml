@@ -1,0 +1,2 @@
+- include_tasks: roletasks.yml
+  when: enable_common_role

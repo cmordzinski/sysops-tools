@@ -1,0 +1,2 @@
+cron_entries:
+   - { minute: "*", hour: "*", weekday: "*", job: "echo testing > /home/master/test" }

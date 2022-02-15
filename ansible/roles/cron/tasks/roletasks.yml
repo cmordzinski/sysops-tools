@@ -1,0 +1,17 @@
+---
+
+- name: Create /etc/cron.d directory
+  file:
+    path: /etc/cron.d
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: Create /etc/cron.d/local from template
+  template:
+    src: etc/cron.d/local.j2
+    dest: /etc/cron.d/local
+    owner: root
+    group: root
+    mode: 0644

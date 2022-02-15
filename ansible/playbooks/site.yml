@@ -1,0 +1,17 @@
+---
+
+- name: apply site configuration to machines
+  hosts: '*'
+  gather_facts: yes
+  gather_subset: [ 'all' ]
+
+  tasks:
+    - include_role:
+         name: "{{ role_name }}"
+         apply:
+           tags:
+             - "{{ role_name }}_role"
+      tags: ['always']
+      loop: "{{ site_role_list }}"
+      loop_control:
+        loop_var: role_name

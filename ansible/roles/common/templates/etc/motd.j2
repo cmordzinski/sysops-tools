@@ -1,0 +1,14 @@
+       _.-;;-._  Host: {{ ansible_hostname }}
+'-..-'|   ||   | OS: {{ ansible_distribution }} {{ ansible_distribution_version }} 
+'-..-'|_.-;;-._| Kernel: {{ ansible_kernel }}  
+'-..-'|   ||   | Architecture: {{ ansible_machine }}
+'-..-'|_.-''-._| Platform: {{ ansible_product_name }}
+                 Memory: {{ (ansible_memtotal_mb*1000*1000)|filesizeformat }}
+                 Swap: {{ (ansible_swaptotal_mb*1000*1000)|filesizeformat }}          
+{% if ansible_processor_cores %}
+                 CPU: {{ ansible_processor[-1] }} ({{ ansible_processor_count }}x{{ ansible_processor_cores}})
+{% endif %}
+
+
+
+ 
