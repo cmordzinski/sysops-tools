@@ -1,6 +1,6 @@
 # sysops-tools
 
-This repository aims to show the general ansible structure I am familiar with using when managing configurations with ansible, obviously it is very bare bones and is more meant to serve as an example than anything else.
+This repository aims to show the general ansible structure I am familiar with using when managing configurations with ansible. Obviosuly, this repository is pretty bare bones and is more meant to serve as an example than anything else.
 
 * ansible
 * bin - shell scripts that will get synced to /opt/adm/bin and added to system wide path
