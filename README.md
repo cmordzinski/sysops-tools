@@ -1,6 +1,7 @@
 # sysops-tools
 
-This repository aims to show the general ansible structure I am familiar with using when managing configurations with ansible. Obviosuly, this repository is pretty bare bones and is more meant to serve as an example than anything else.
+This repository aims to show the general ansible structure I am familiar with when managing configurations with ansible. 
+Obviosuly, this repository is pretty bare bones and is more meant to serve as an example than anything else.
 
 * ansible - main ansible directory, inventory, roles, etc live here
 * bin - scripts that will get synced to /opt/adm/bin and added to system wide path. Typically shell scripts, or wrapper scripts to call python code in the tools dir.
