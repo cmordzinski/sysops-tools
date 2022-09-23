@@ -1,6 +1,6 @@
 # sysops-tools
 
-This repository aims to show the general ansible structure I am familiar with when managing configurations with ansible. 
+This repository aims to show the general ansible structure I am familiar with when managing configurations. 
 Obviosuly, this repository is pretty bare bones and is more meant to serve as an example than anything else.
 
 * ansible - main ansible directory, inventory, roles, etc live here
